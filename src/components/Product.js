@@ -1,12 +1,59 @@
-import React from 'react'
+import React,{useEffect} from 'react';
 import {Box, Button, HStack,Icon, VStack } from '@chakra-ui/react'
 import { ChevronUpIcon } from '@chakra-ui/icons';
 import LoginHeader from './LoginHeader'
 import BlogPostImg1 from './BlogPostImg1.jpg'
 // import BlogPostImg2 from './BlogPostImg2.jpg'
 // import BlogPostImg2 from './BlogPostImg2.jpg'
+import axios from './axios';
+// import {loadData} from './UserData'
+import {ACCESS_TOKEN_NAME} from '../access/token'
 
-export default function Blog() {
+
+ function Product(props) {
+
+  // const [email, setEmail] = useState('')
+  const url = 'auth/me';
+
+  useEffect(() =>{
+    axios.get(url)
+  },[])
+
+  // useEffect(() => {
+  //   const getUserMetadata = async () => {
+  //     try {
+  //       const accessToken =  loadData();
+  //       const groupData = await axios.get(url,
+  //         {
+  //           headers: {
+  //             Authorization: `bearer ${accessToken}`,
+  //           },
+  //         }
+  //       );
+  //       // setEmail(email);
+  //     } catch (e) {
+  //       console.log(e.message);
+  //     }
+  //   };
+
+  //   getUserMetadata();
+  // }, []);
+
+  useEffect(() =>{
+    const config = {
+      headers: { Authorization: `Bearer ${ACCESS_TOKEN_NAME}` },
+    };
+
+    
+    axios.get(
+      url,
+      config
+    )
+      .then(console.log)
+      .catch(console.log);
+  },[])
+
+
   return (
     <Box w="100%" bg="#F4F4F4">
       <Box>
@@ -351,3 +398,6 @@ export default function Blog() {
     </Box>
   );
 }
+
+
+export default Product

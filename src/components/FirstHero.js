@@ -5,8 +5,29 @@ import FirstHeroImg from './FirstHeroImg.png';
 import PlayStoreImg from './PlayStoreLogo.png'
 import AppleLogo from './AppleLogo.png'
 import Logo from './Logo'
+// import { useHistory } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom'
 
-export default function FirstHero() {
+
+export default function FirstHero(props) {
+
+  let navigate = useNavigate();
+
+ 
+
+  // let history = useHistory();
+
+  // const redirectLogin = () => {
+  //   history.push('/Login');
+  // };
+
+  // const redirectRegister = () => {
+  //   history.push('/Register');
+  // };
+
+
+
+
   return (
     <Box bg="#301446" color="#fff" pb={3}>
       <Flex>
@@ -15,10 +36,26 @@ export default function FirstHero() {
         </Box>
         <Spacer />
         <Box m={4} ml={3}>
-          <Button m={3} bg="#EA7052" borderRadius="16px">
+          <Button
+            onClick={() => {
+              navigate('/Register');
+            }}
+            m={3}
+            bg="#EA7052"
+            borderRadius="16px"
+          >
+            {/* <Link> */}
             Register
+            {/* </Link> */}
           </Button>
-          <Button borderRadius="16px" bg="#301446">
+
+          <Button
+            onClick={() => {
+              navigate('/Login');
+            }}
+            borderRadius="16px"
+            bg="#301446"
+          >
             Login
           </Button>
         </Box>

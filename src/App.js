@@ -5,31 +5,36 @@ import {
  
   theme,
 } from '@chakra-ui/react';
-// import { ColorModeSwitcher } from './ColorModeSwitcher';
-import Footer from './components/Footer';
-// import LoginHeader from './components/LoginHeader';
-import ContactUs from './components/Contact-Us';
-import FirstHero from './components/FirstHero';
-import SecondHero from './components/SecondHero';
-// import Login from './components/Login'
-// import Blog from './components/Blog'
+import Dashboard from './components/Dashboard'
+import Login from './components/Login'
+import Register from './components/Register'
+import ProductPage from './components/ProductPage'
+import Error from './components/Error'
+import { BrowserRouter as Router,  Routes, Route } from 'react-router-dom';
+// import axios from 'axios';
+
+
+// axios.default.baseURL = '/www.giropay.xyz/api/v1/giro-app';
+
 
 function App() {
+  
   return (
-    <ChakraProvider theme={theme}>
-      <Box
+    <Router>
+      <ChakraProvider theme={theme}>
+        <Box
         // gn="center" fontSize="xl"
-      >
-        {/* <LoginHeader /> */}
-        <FirstHero />
-        <SecondHero />
-        <ContactUs />
-        <Footer />
-
-        {/* <Login /> */}
-        {/* <Blog /> */}
-      </Box>
-    </ChakraProvider>
+        >
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/productpage" element={<ProductPage />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </Box>
+      </ChakraProvider>
+    </Router>
   );
 }
 

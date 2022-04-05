@@ -1,8 +1,9 @@
 import React from 'react'
-import {Box, Flex, Spacer, HStack} from '@chakra-ui/react'
+import {Box, Flex, Spacer, HStack, Img} from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {FaWhatsappSquare} from 'react-icons/fa'
 import { FiMail } from 'react-icons/fi';
+import Calling from './Calling.png'
 
 export default function ContactUs() {
   return (
@@ -51,7 +52,11 @@ export default function ContactUs() {
           </Box>
         </Box>
         <Spacer />
-        <Box></Box>
+        <Box>
+          <Box p={4}>
+            <Img src={Calling} />
+          </Box>
+        </Box>
       </Flex>
     </Box>
   );

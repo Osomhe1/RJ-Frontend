@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Box,
   FormControl,
@@ -12,8 +12,83 @@ import Line3 from './Line3.png';
 import Line4 from './Line4.png';
 import Line5 from './Line5.png';
 import Logo from './Logo';
+import { useNavigate } from 'react-router-dom';
+// import axios from 'axios'
+import axios from './axios'
+import { ACCESS_TOKEN_NAME } from '../access/token';
 
-export default function Register() {
+
+
+
+
+ function Register(props) {
+
+  let navigate = useNavigate();
+
+  const url = 'auth/register';
+
+  const [state, setState] = useState({
+    email: '',
+    password: '',
+    successMessage: null,
+  });
+
+  const handleChange = (e) =>{
+    const {id, value} = e.target
+    setState(prevState =>({
+      ...prevState, [id] : value
+    }))
+        console.log(id);
+
+  }
+
+  const sendDetailsToServer = () => {
+    if (state.email.length && state.password.length) {
+      // props.showError(null);
+      const payload = {
+        email: state.email,
+        password: state.password,
+      };
+      axios.post(url, payload)
+        .then( (response)=> {
+          if (response.status === 200) {
+            setState(prevState => ({
+              ...prevState,
+              successMessage:
+                'Registration successful. Redirecting to home page..',
+            }));
+            localStorage.setItem(ACCESS_TOKEN_NAME, response.data.token);
+            navigate('/ProductPage');
+
+            // props.showError(null);
+          } else {
+            props.showError('Some error ocurred');
+          }
+        })
+        .catch( (err)=> {
+          console.log(err);
+        });
+    } else {
+      props.showError('Please enter valid email and password');
+    }
+  };
+
+
+
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    if(state.password){
+      sendDetailsToServer()
+    }else{
+      
+      // props.showError('Passwords do not match');
+    }
+    
+      // return 'Registration Successfull.'
+      // navigate('/ProductPage');
+  };
+
   return (
     <>
       <Grid templateColumns="repeat(5, 1fr)" gap={4} bg="#E5E5E5">
@@ -78,6 +153,8 @@ export default function Register() {
                         fontSize={20}
                         id="email"
                         placeholder="Email"
+                        onChange={handleChange}
+                        value={state.email}
                       />
                     </Box>
                     <Box maxWidth={500} m="auto" mt={4}>
@@ -89,6 +166,8 @@ export default function Register() {
                         fontSize={20}
                         id="password"
                         placeholder="Password"
+                        onChange={handleChange}
+                        value={state.password}
                       />
                     </Box>
                     <Box maxWidth={500} m="auto" mt={4}>
@@ -100,6 +179,7 @@ export default function Register() {
                         borderRadius="16px"
                         p={8}
                         width={200}
+                        onClick={handleSubmit}
                       >
                         Register
                       </Button>
@@ -114,3 +194,6 @@ export default function Register() {
     </>
   );
 }
+
+
+export default  Register

@@ -1,18 +1,80 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { Box, FormControl, Input, Button, Img, Grid, GridItem } from '@chakra-ui/react';
 import Line3 from './Line3.png'
 import Line4 from './Line4.png'
 import Line5 from './Line5.png'
 import Logo from './Logo'
+// import { withRouter } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+// import axios from 'axios';
+import axios from './axios'
+// import {ACCESS_TOKEN_NAME} from '../access/token'
+import {saveData} from './UserData'
 
-export default function Login() {
+
+ function Login(props) {
+
+  let navigate = useNavigate();
+
+  const [state, setState] = useState({
+    email: '',
+    password: '',
+    successMessage: null,
+  });
+
+ 
+  const url = 'auth/login';
+
+
+  const handleChange = e => {
+    const { id, value } = e.target;
+    setState(prevState => ({
+      ...prevState,
+      [id]: value,
+      // console.log(id)
+    }));
+    console.log(id)
+  };
+
+   const handleSubmitClick = (e) => {
+        e.preventDefault();
+        const payload = {
+          email: state.email,
+          password: state.password,
+        };
+        axios.post(url, payload)
+        .then((response) =>{
+          // localStorage.setItem(ACCESS_TOKEN_NAME, response.data.token);
+          // navigate('/ProductPage');
+          if (response.status === 200) {
+            console.log(response.status, 'response')
+            setState(prevState => ({
+              ...prevState,
+              ' successMessage':
+                'Login Successful. Redirecting to product page...',
+            }));
+            localStorage.setItem(saveData, response.data.token);
+            navigate('/ProductPage');
+            console.log(state.email, state.password)
+            // props.showError(null);
+          } else if (response.code === 204) {
+            props.showError('Username and password do not match');
+          } else {
+            props.showError('Username does not exists');
+          }
+        })
+        .catch((err) =>{
+          console.log(err);
+        })
+
+
+       
+    }
+
+
   return (
     <>
-      <Grid
-        templateColumns="repeat(5, 1fr)"
-        gap={4}
-        bg="#E5E5E5"
-      >
+      <Grid templateColumns="repeat(5, 1fr)" gap={4} bg="#E5E5E5">
         <GridItem colSpan={1} bg="#301446" h="100%">
           <Box mt={5}>
             <Box>
@@ -32,7 +94,7 @@ export default function Login() {
               <Box
               // h={250}
               >
-                <Img  src={Line5} />
+                <Img src={Line5} />
               </Box>
             </Box>
           </Box>
@@ -74,6 +136,8 @@ export default function Login() {
                         fontSize={20}
                         id="email"
                         placeholder="Email"
+                        value={state.email}
+                        onChange={handleChange}
                       />
                     </Box>
                     <Box maxWidth={500} m="auto" mt={4}>
@@ -85,6 +149,8 @@ export default function Login() {
                         fontSize={20}
                         id="password"
                         placeholder="Password"
+                        value={state.password}
+                        onChange={handleChange}
                       />
                     </Box>
                     <Box maxWidth={500} m="auto" mt={4}>
@@ -96,6 +162,7 @@ export default function Login() {
                         borderRadius="16px"
                         p={8}
                         width={200}
+                        onClick={handleSubmitClick}
                       >
                         Login
                       </Button>
@@ -110,3 +177,5 @@ export default function Login() {
     </>
   );
 }
+
+export default  Login
