@@ -4,27 +4,23 @@ import Line3 from './Line3.png'
 import Line4 from './Line4.png'
 import Line5 from './Line5.png'
 import Logo from './Logo'
-// import { withRouter } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-// import axios from 'axios';
 import axios from './axios'
-// import {ACCESS_TOKEN_NAME} from '../access/token'
-import {saveData} from './UserData'
-
 
  function Login(props) {
 
   let navigate = useNavigate();
 
-  const [state, setState] = useState({
+  const [state, setState] = useState(
+    // getData
+    {
     email: '',
     password: '',
-    successMessage: null,
-  });
-
+    }
+    // successMessage: null,
+  );
  
   const url = 'auth/login';
-
 
   const handleChange = e => {
     const { id, value } = e.target;
@@ -36,39 +32,30 @@ import {saveData} from './UserData'
     console.log(id)
   };
 
-   const handleSubmitClick = (e) => {
+   const handleSubmitClick =  (e) => {
         e.preventDefault();
         const payload = {
           email: state.email,
           password: state.password,
         };
-        axios.post(url, payload)
+        // const result = await
+         axios.post(url, payload)
+        // setState(result.data)
         .then((response) =>{
-          // localStorage.setItem(ACCESS_TOKEN_NAME, response.data.token);
-          // navigate('/ProductPage');
-          if (response.status === 200) {
-            console.log(response.status, 'response')
-            setState(prevState => ({
-              ...prevState,
-              ' successMessage':
-                'Login Successful. Redirecting to product page...',
-            }));
-            localStorage.setItem(saveData, response.data.token);
-            navigate('/ProductPage');
-            console.log(state.email, state.password)
-            // props.showError(null);
-          } else if (response.code === 204) {
-            props.showError('Username and password do not match');
-          } else {
-            props.showError('Username does not exists');
-          }
+          // localStorage.setItem('myEmail', response.data.token);
+          navigate('/ProductPage');
+        
+          console.log(response, 'data')
+        
+          setState({
+            email: '',
+            password:''
+          })
         })
         .catch((err) =>{
           console.log(err);
         })
-
-
-       
+     
     }
 
 
@@ -81,19 +68,13 @@ import {saveData} from './UserData'
               <Logo />
             </Box>
             <Box mt={20}>
-              <Box
-              //  h={250}
-              >
+              <Box>
                 <Img h={250} src={Line3} />
               </Box>
-              <Box
-              //  h={250}
-              >
+              <Box>
                 <Img h={250} src={Line4} />
               </Box>
-              <Box
-              // h={250}
-              >
+              <Box>
                 <Img src={Line5} />
               </Box>
             </Box>
@@ -101,14 +82,11 @@ import {saveData} from './UserData'
         </GridItem>
 
         <GridItem colSpan={2}>
-          <Box
-            bg="#E5E5E5"
-            //    h="100vh"
-          >
+          <Box bg="#E5E5E5">
             <Box pt={40}>
               <Box
                 bg="#fff"
-                maxW={600}
+                width={{ base: 290, sm: 300, md: 600 }}
                 borderRadius={40}
                 m="auto"
                 pt={10}
@@ -127,7 +105,7 @@ import {saveData} from './UserData'
                 </Box>
                 <Box>
                   <FormControl isRequired mt={10} pb={10}>
-                    <Box maxWidth={500} m="auto" mt={4}>
+                    <Box width={{ base: 290, md: 500 }} m="auto" mt={4}>
                       <Input
                         p={8}
                         bg="#F4F4F4"
@@ -138,9 +116,10 @@ import {saveData} from './UserData'
                         placeholder="Email"
                         value={state.email}
                         onChange={handleChange}
+                        type="text"
                       />
                     </Box>
-                    <Box maxWidth={500} m="auto" mt={4}>
+                    <Box width={{ base: 290, md: 500 }} m="auto" mt={4}>
                       <Input
                         p={8}
                         bg="#F4F4F4"
@@ -151,9 +130,10 @@ import {saveData} from './UserData'
                         placeholder="Password"
                         value={state.password}
                         onChange={handleChange}
+                        type='password'
                       />
                     </Box>
-                    <Box maxWidth={500} m="auto" mt={4}>
+                    <Box width={{ base: 290, md: 500 }} m="auto" mt={4}>
                       <Button
                         bg="#EA7052"
                         color="#fff"
@@ -161,7 +141,7 @@ import {saveData} from './UserData'
                         fontSize={20}
                         borderRadius="16px"
                         p={8}
-                        width={200}
+                        width={{ base: 290, md: 500 }}
                         onClick={handleSubmitClick}
                       >
                         Login

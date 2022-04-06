@@ -6,11 +6,11 @@ export default function SecondHero() {
   return (
     <Box>
       <Flex
+        display={{ base: 'grid', md: 'flex' }}
         fontFamily="Chalkboard SE"
         maxWidth={900}
         justifyContent="center"
         alignItem="center"
-      
         m="auto"
         p={10}
       >
@@ -23,9 +23,11 @@ export default function SecondHero() {
           <Box mt={10} color="#000" fontSize="40px" fontWeight={700}>
             <h2>
               Everything you’ll need to
+              <span></span> {''}
               <Box as="span" color="#EA7052">
                 excel
               </Box>
+              <span></span> {''}
               in life
             </h2>
           </Box>
@@ -33,7 +35,7 @@ export default function SecondHero() {
             We’ve curated a list of valuable resources to get you going in life,
             all for free!
           </Box>
-          <Box mt={10} color="#fff">
+          <Box mt={{ base: 8, md: 10 }} mb={{ base: 8}} color="#fff">
             <Button w={350} h={70} bg="#EA7052">
               Get Started
             </Button>

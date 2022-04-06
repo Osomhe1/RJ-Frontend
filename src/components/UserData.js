@@ -1,16 +1,3 @@
-// import  {useState, useEffect} from 'react'
-
-// export default function UserData() {
-//     localStorage.setItem('email', JSON.stringify(this.state.email));
-
-// //     useEffect(() => {
-// //     //   localStorage.setItem('email', JSON.stringify(email));
-// //     }, []);
-
-// //   return (
-// //     <div>UserData</div>
-// //   )
-// }
 
 export const  loadData = email => {
   try {
@@ -27,7 +14,7 @@ export const  loadData = email => {
 export const saveData = email => {
   try {
     const serializedData = JSON.stringify(email.split('@')[0]);
-    localStorage.setItem('state', serializedData);
+    localStorage.setItem(email, serializedData);
   } catch (err) {
     return undefined;
   }

@@ -13,9 +13,7 @@ import Line4 from './Line4.png';
 import Line5 from './Line5.png';
 import Logo from './Logo';
 import { useNavigate } from 'react-router-dom';
-// import axios from 'axios'
 import axios from './axios'
-import { ACCESS_TOKEN_NAME } from '../access/token';
 
 
 
@@ -41,10 +39,16 @@ import { ACCESS_TOKEN_NAME } from '../access/token';
         console.log(id);
 
   }
+  localStorage.setItem('email', state.email)
+  localStorage.setItem('token', state.token)
+
+  const session = {
+    email: localStorage.getItem('email'),
+    token: localStorage.getItem('token'),
+  };
 
   const sendDetailsToServer = () => {
     if (state.email.length && state.password.length) {
-      // props.showError(null);
       const payload = {
         email: state.email,
         password: state.password,
@@ -57,10 +61,9 @@ import { ACCESS_TOKEN_NAME } from '../access/token';
               successMessage:
                 'Registration successful. Redirecting to home page..',
             }));
-            localStorage.setItem(ACCESS_TOKEN_NAME, response.data.token);
+            localStorage.setItem(session, response.data.token);
             navigate('/ProductPage');
 
-            // props.showError(null);
           } else {
             props.showError('Some error ocurred');
           }
@@ -80,13 +83,7 @@ import { ACCESS_TOKEN_NAME } from '../access/token';
     e.preventDefault();
     if(state.password){
       sendDetailsToServer()
-    }else{
-      
-      // props.showError('Passwords do not match');
     }
-    
-      // return 'Registration Successfull.'
-      // navigate('/ProductPage');
   };
 
   return (
@@ -125,9 +122,10 @@ import { ACCESS_TOKEN_NAME } from '../access/token';
             <Box pt={40}>
               <Box
                 bg="#fff"
-                maxW={600}
+                width={{ base: 290, sm: 300, md: 600 }}
                 borderRadius={40}
-                m="auto"
+                m={{ base: 'auto', md: 30 }}
+                // m="auto"
                 pt={10}
                 pb={10}
                 textAlign="center"
@@ -144,7 +142,7 @@ import { ACCESS_TOKEN_NAME } from '../access/token';
                 </Box>
                 <Box>
                   <FormControl isRequired mt={10} pb={10}>
-                    <Box maxWidth={500} m="auto" mt={4}>
+                    <Box width={{ base: 290, md: 500 }} m="auto" mt={4}>
                       <Input
                         p={8}
                         bg="#F4F4F4"
@@ -157,7 +155,7 @@ import { ACCESS_TOKEN_NAME } from '../access/token';
                         value={state.email}
                       />
                     </Box>
-                    <Box maxWidth={500} m="auto" mt={4}>
+                    <Box width={{ base: 290, md: 500 }} m="auto" mt={4}>
                       <Input
                         p={8}
                         bg="#F4F4F4"
@@ -168,9 +166,10 @@ import { ACCESS_TOKEN_NAME } from '../access/token';
                         placeholder="Password"
                         onChange={handleChange}
                         value={state.password}
+                        type="password"
                       />
                     </Box>
-                    <Box maxWidth={500} m="auto" mt={4}>
+                    <Box width={{ base: 290, md: 500 }} m="auto" mt={4}>
                       <Button
                         bg="#EA7052"
                         color="#fff"
@@ -178,7 +177,7 @@ import { ACCESS_TOKEN_NAME } from '../access/token';
                         fontSize={20}
                         borderRadius="16px"
                         p={8}
-                        width={200}
+                        width={{ base: 290, md: 500 }}
                         onClick={handleSubmit}
                       >
                         Register

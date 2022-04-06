@@ -5,7 +5,6 @@ import FirstHeroImg from './FirstHeroImg.png';
 import PlayStoreImg from './PlayStoreLogo.png'
 import AppleLogo from './AppleLogo.png'
 import Logo from './Logo'
-// import { useHistory } from 'react-router-dom';
 import {useNavigate} from 'react-router-dom'
 
 
@@ -13,24 +12,12 @@ export default function FirstHero(props) {
 
   let navigate = useNavigate();
 
- 
-
-  // let history = useHistory();
-
-  // const redirectLogin = () => {
-  //   history.push('/Login');
-  // };
-
-  // const redirectRegister = () => {
-  //   history.push('/Register');
-  // };
-
 
 
 
   return (
     <Box bg="#301446" color="#fff" pb={3}>
-      <Flex>
+      <Flex >
         <Box m={4}>
           <Logo />
         </Box>
@@ -44,9 +31,7 @@ export default function FirstHero(props) {
             bg="#EA7052"
             borderRadius="16px"
           >
-            {/* <Link> */}
             Register
-            {/* </Link> */}
           </Button>
 
           <Button
@@ -62,14 +47,11 @@ export default function FirstHero(props) {
       </Flex>
 
       <Box
-        d="flex"
+        display={{ base:"grid", md: 'flex' }}
         justifyContent="spacebetween"
         fontFamily="Chalkboard SE"
-        maxWidth={1000}
-        // m="auto"
-        // justifyContent="center"
+        maxWidth={[300, 500, 1000]}
         alignItem="center"
-        // m={10}
         m="auto"
       >
         <Box
@@ -81,10 +63,11 @@ export default function FirstHero(props) {
         >
           <Box fontSize="40px" fontWeight={700}>
             <h2>
-              Our mission is to
+              Our mission is to<span></span> {''}
               <Box as="span" color="#EA7052">
                 advance
-              </Box>
+              </Box>{' '}
+              <span></span>
               humanity
             </h2>
           </Box>
